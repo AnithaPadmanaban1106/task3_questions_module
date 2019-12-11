@@ -7,8 +7,8 @@ import lombok.Data;
 public class Answer {
 
 	
-	private Integer id;
-	private Integer questionId;
+	private String id;
+	private String questionId;
 	private String option;
 	private Boolean isRightAnswer;
 	private String rightAnswerExplanation;

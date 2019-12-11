@@ -1,14 +1,20 @@
-package com.revature.revaturequestion.model;
+package com.revature.revaturequestion.dto;
+
+import com.revature.revaturequestion.model.QuestionType;
 
 import lombok.Data;
 
+
 @Data
-public class Question {
-
-	
-
+public class AnswerDTO {
+	private String id;
 	private String questionId;
-
+	private String option;
+	private Boolean isRightAnswer;
+	private String rightAnswerExplanation;
+	private String grading;
+	private Boolean isStricky;
+	
 	private String title;
 
 	private QuestionType questionType;
@@ -30,8 +36,5 @@ public class Question {
 	private Boolean status;
 
 	private Boolean isImported;
-	
-	private String categoryName;
-	private String levelName;
 
 	}
