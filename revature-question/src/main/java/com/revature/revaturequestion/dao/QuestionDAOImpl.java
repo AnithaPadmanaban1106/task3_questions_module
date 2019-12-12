@@ -24,7 +24,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 	PreparedStatement pst = null;
 	ConnectionUtil conObject;
 
-	public boolean saveQuestionAnswer(Question question, QuestionDTO QuestionDTO) throws DBException {
+	public boolean saveQuestionAnswer(QuestionDTO questionDTO) throws DBException {
 		Boolean result = false;
 		Savepoint questionAnswer = null;
 		try {
@@ -33,17 +33,17 @@ public class QuestionDAOImpl implements QuestionDAO {
 			questionAnswer = con.setSavepoint("savepoint");
 			String sqlQuestion = "insert into questions(title,question_type,content,category_id,tag,level_id,skill_points,score,duration,status,is_import)values(?,?,?,?,?,?,?,?,?,?,?)";
 			pst = con.prepareStatement(sqlQuestion);
-			pst.setString(1, question.getTitle());
-			pst.setString(2, question.getQuestionType().toString());
-			pst.setString(3, question.getContent());
-			pst.setString(4, question.getCategoryId());
-			pst.setString(5, question.getTag());
-			pst.setString(6, question.getLevelId());
-			pst.setString(7, question.getSkillPoints());
-			pst.setString(8, question.getScore());
-			pst.setString(9, question.getDuration());
-			pst.setBoolean(10, question.getStatus());
-			pst.setBoolean(11, question.getIsImported());
+			pst.setString(1, questionDTO.getTitle());
+			pst.setString(2, questionDTO.getQuestionType().toString());
+			pst.setString(3, questionDTO.getContent());
+			pst.setInt(4, questionDTO.getCategoryId());
+			pst.setString(5, questionDTO.getTag());
+			pst.setInt(6, questionDTO.getLevelId());
+			pst.setInt(7, questionDTO.getSkillPoints());
+			pst.setInt(8, questionDTO.getScore());
+			pst.setString(9, questionDTO.getDuration());
+			pst.setBoolean(10, questionDTO.getStatus());
+			pst.setBoolean(11, questionDTO.getIsImported());
 			pst.executeUpdate();
 
 			String selectQuery = "select last_insert_id()";
@@ -57,7 +57,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 
 			}
 
-			List<Answer> answerList = QuestionDTO.getAnswer();
+			List<Answer> answerList = questionDTO.getAnswer();
 			String answerDetail = "";
 			int count = 0;
 			for (Answer answers : answerList) {
@@ -106,7 +106,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 		return result;
 	}
 
-	public boolean deleteQuestion(String questionId) throws DBException {
+	public boolean deleteQuestion(int questionId) throws DBException {
 		Boolean result = false;
 		Savepoint deleteQuestion = null;
 
@@ -118,12 +118,12 @@ public class QuestionDAOImpl implements QuestionDAO {
 
 			String query = "delete from question_answers where question_id=?";
 			pst = con.prepareStatement(query);
-			pst.setString(1, questionId);
+			pst.setInt(1, questionId);
 			pst.executeUpdate();
 
 			String sql = "delete from questions where id=?";
 			pst = con.prepareStatement(sql);
-			pst.setString(1, questionId);
+			pst.setInt(1, questionId);
 			int check = pst.executeUpdate();
 			if (check == 1) {
 				result = true;
@@ -151,15 +151,15 @@ public class QuestionDAOImpl implements QuestionDAO {
 		return result;
 	}
 
-	public boolean updateQuestion(String questionId, String status) throws DBException {
+	public boolean updateQuestion(int questionId, Boolean status) throws DBException {
 		Boolean result = false;
 
 		try {
 			con = ConnectionUtil.getConnection();
 			String sql = "update questions set `status`=? where id=?";
 			pst = con.prepareStatement(sql);
-			pst.setString(1, status);
-			pst.setString(2, questionId);
+			pst.setBoolean(1, status);
+			pst.setInt(2, questionId);
 			int check = pst.executeUpdate();
 			if (check == 1) {
 				result = true;
@@ -182,7 +182,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 		return result;
 	}
 
-	public List<Question> listAllQuestions(String status) throws DBException {
+	public List<Question> listAllQuestions(Boolean status) throws DBException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		List<Question> question = new ArrayList<Question>();
@@ -190,7 +190,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 			con = ConnectionUtil.getConnection();
 			String sql = "select q.title,q.tag,c.name,ql.name from questions q,categories c,question_levels ql where q.category_id=c.id and q.level_id=ql.id and q.status=?";
 			pst = con.prepareStatement(sql);
-			pst.setString(1, status);
+			pst.setBoolean(1, status);
 			ResultSet rs = pst.executeQuery();
 			Question value = null;
 			while (rs.next()) {
@@ -245,13 +245,13 @@ public class QuestionDAOImpl implements QuestionDAO {
 			pst = con.prepareStatement(sqlQuestion);
 			pst.setString(1, question.getTitle());
 			pst.setString(2, question.getContent());
-			pst.setString(3, question.getCategoryId());
-			pst.setString(4, question.getLevelId());
+			pst.setInt(3, question.getCategoryId());
+			pst.setInt(4, question.getLevelId());
 			pst.setString(5, question.getTag());
-			pst.setString(6, question.getSkillPoints());
-			pst.setString(7, question.getScore());
+			pst.setInt(6, question.getSkillPoints());
+			pst.setInt(7, question.getScore());
 			pst.setString(8, question.getDuration());
-			pst.setString(9, question.getQuestionId());
+			pst.setInt(9, question.getQuestionId());
 
 			pst.executeUpdate();
 
@@ -261,7 +261,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 			pst.setBoolean(2, answer.getIsRightAnswer());
 			pst.setString(3, answer.getRightAnswerExplanation());
 			pst.setBoolean(4, answer.getIsStricky());
-			pst.setString(5, answer.getId());
+			pst.setInt(5, answer.getId());
 			int check = pst.executeUpdate();
 			if (check == 1) {
 				result = true;

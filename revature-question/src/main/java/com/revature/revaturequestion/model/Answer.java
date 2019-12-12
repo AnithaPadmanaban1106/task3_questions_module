@@ -7,11 +7,11 @@ import lombok.Data;
 public class Answer {
 
 	
-	private String id;
-	private String questionId;
+	private Integer id;
+	private Integer questionId;
 	private String option;
 	private Boolean isRightAnswer;
 	private String rightAnswerExplanation;
-	private String grading;
+	private Integer grading;
 	private Boolean isStricky;
 }

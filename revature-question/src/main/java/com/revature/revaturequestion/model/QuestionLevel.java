@@ -8,6 +8,6 @@ import lombok.Data;
 
 public class QuestionLevel {
 	
-	private String id;
+	private Integer id;
 	private String name;
 }

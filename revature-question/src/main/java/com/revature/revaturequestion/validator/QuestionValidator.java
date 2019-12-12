@@ -28,11 +28,11 @@ public class QuestionValidator {
 		String title = questionDTO.getTitle();
 		// QuestionType questionType = questionAnswerDTO.getQuestionType();
 		String content = questionDTO.getContent();
-		String categoryId = questionDTO.getCategoryId();
+		String categoryId = Integer.toString(questionDTO.getCategoryId());
 		String tag = questionDTO.getTag();
-		String levelId = questionDTO.getLevelId();
-		String skillPoints = questionDTO.getSkillPoints();
-		String score = questionDTO.getScore();
+		String levelId = Integer.toString(questionDTO.getLevelId());
+		String skillPoints = Integer.toString(questionDTO.getSkillPoints());
+		String score = Integer.toString(questionDTO.getScore());
 		String duration = questionDTO.getDuration();
 
 		// String status = String.valueOf(questionDTO.getStatus());
@@ -114,14 +114,16 @@ public class QuestionValidator {
 		 */
 	}
 
-	public void deleteQuestionValidate(String questionId) throws ValidatorException {
-
-		Pattern pattern = Pattern.compile(".*[^0-9].*");
-		if (questionId == null || pattern.matcher(questionId).matches()) {
-			throw new ValidatorException(MessageConstant.QUESTIONID);
-		}
-
-	}
+	/*
+	 * public void deleteQuestionValidate(int questionId) throws ValidatorException
+	 * {
+	 * 
+	 * Pattern pattern = Pattern.compile(".*[^0-9].*"); if
+	 * (pattern.matcher(questionId).matches()) { throw new
+	 * ValidatorException(MessageConstant.QUESTIONID); }
+	 * 
+	 * }
+	 */
 
 	public void updateQuestionValidate(String questionId, String status) throws ValidatorException {
 

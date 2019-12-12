@@ -7,7 +7,7 @@ public class Question {
 
 	
 
-	private String questionId;
+	private Integer questionId;
 
 	private String title;
 
@@ -15,15 +15,15 @@ public class Question {
 
 	private String content;
 
-	private String categoryId;
+	private Integer categoryId;
 
 	private String tag;
 
-	private String levelId;
+	private Integer levelId;
 
-	private String skillPoints;
+	private Integer skillPoints;
 
-	private String score;
+	private Integer score;
 
 	private String duration;
 

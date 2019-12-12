@@ -38,24 +38,26 @@ public class QuestionService {
 
 		try {
 
-			question.setTitle(questionDTO.getTitle());
-			question.setQuestionType(questionDTO.getQuestionType());
-			question.setContent(questionDTO.getContent());
-			question.setCategoryId(questionDTO.getCategoryId());
-			question.setTag(questionDTO.getTag());
-			question.setLevelId(questionDTO.getLevelId());
-			question.setSkillPoints(questionDTO.getSkillPoints());
-			question.setScore(questionDTO.getScore());
-			question.setDuration(questionDTO.getDuration());
-			question.setStatus(questionDTO.getStatus());
-			question.setIsImported(questionDTO.getIsImported());
+			/*
+			 * question.setTitle(questionDTO.getTitle());
+			 * question.setQuestionType(questionDTO.getQuestionType());
+			 * question.setContent(questionDTO.getContent());
+			 * question.setCategoryId(questionDTO.getCategoryId());
+			 * question.setTag(questionDTO.getTag());
+			 * question.setLevelId(questionDTO.getLevelId());
+			 * question.setSkillPoints(questionDTO.getSkillPoints());
+			 * question.setScore(questionDTO.getScore());
+			 * question.setDuration(questionDTO.getDuration());
+			 * question.setStatus(questionDTO.getStatus());
+			 * question.setIsImported(questionDTO.getIsImported());
+			 */
 			
 				questionValidator.questionValidate(questionDTO);
 			
 				
 				
-			result = questionDAOImpl.saveQuestionAnswer(question, questionDTO);
-		} catch (DBException | ValidatorException e) {
+			result = questionDAOImpl.saveQuestionAnswer(questionDTO);
+		} catch (DBException | ValidatorException  e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
 
@@ -64,31 +66,30 @@ public class QuestionService {
 
 	}
 
-	public boolean deleteQuestion(String questionId) throws  ServiceException {
+	public boolean deleteQuestion(int questionId) throws  ServiceException {
 
 		Boolean result;
 		try {
 		
-			questionValidator.deleteQuestionValidate(questionId);
 		
 			result = questionDAOImpl.deleteQuestion(questionId);
-		} catch (DBException | ValidatorException e) {
+		} catch (DBException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
 		}
 		return result;
 	}
 
-	public boolean updateQuestion(String questionId, String status) throws ServiceException
+	public boolean updateQuestion(int questionId, Boolean status) throws ServiceException
 
 	{
 		Boolean result = null;
 		try {
 			
-				questionValidator.updateQuestionValidate(questionId, status);
+				//questionValidator.updateQuestionValidate(questionId, status);
 		
 			result = questionDAOImpl.updateQuestion(questionId, status);
-		} catch (DBException | ValidatorException e) {
+		} catch (DBException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
 		}
@@ -98,7 +99,7 @@ public class QuestionService {
 	
 	
 	
-	public List<Question> listAll(String status) throws ServiceException {
+	public List<Question> listAll(Boolean status) throws ServiceException {
 		List<Question> question = null;
 		try {
 

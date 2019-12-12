@@ -61,7 +61,7 @@ public class QuestionContoller {
 	@ApiOperation("DeleteQuestionApi")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = Message.class),
 			@ApiResponse(code = 400, message = "Failure") })
-	public ResponseEntity<?> deleteQuestion(@RequestParam("questionId") String questionId)
+	public ResponseEntity<?> deleteQuestion(@RequestParam("questionId") int questionId)
 			{
 		String errorMessage = null;
 
@@ -83,7 +83,7 @@ public class QuestionContoller {
 	@ApiOperation("ListAllQuestionApi")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = Message.class),
 			@ApiResponse(code = 400, message = "Failure") })
-	public ResponseEntity<?> listAll(@RequestParam("status") String status )  {
+	public ResponseEntity<?> listAll(@RequestParam("status") Boolean status )  {
 		String errorMessage = null;
 
 		List<Question> result = null;
@@ -105,7 +105,7 @@ public class QuestionContoller {
 	@ApiOperation("ActivateDeactiveQuestionApi")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = Message.class),
 			@ApiResponse(code = 400, message = "Failure") })
-	public ResponseEntity<?> ActiveDeactiveQuestion(@RequestParam("questionId") String questionId,@RequestParam("status") String status )  {
+	public ResponseEntity<?> ActiveDeactiveQuestion(@RequestParam("questionId") int questionId,@RequestParam("status") Boolean status )  {
 		String errorMessage = null;
 
 		Boolean result = false;
